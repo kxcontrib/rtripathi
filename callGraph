@@ -1,0 +1,20 @@
+    * From: "Aaron Davies" <aaron.davies@gmail.com>
+    * To: k4@listbox.com
+    * Subject: introspective miscellany
+    * Date: Thu, 13 Nov 2008 10:59:49 +0800
+
+potentially useful
+
+wtf:{(` sv'd,'f)where count each f:where each(get each d:` sv'`,'`,key`)~'\:x}
+
+callGraph:{
+ d:p!c@'where each 100={@[type get@;x;0h]}each'c:(get each get each
+p:system"f")[;3];
+ d:{[x;y;z](enlist(-1+count y;z;f)),raze .z.s[x;y]each(f:x z)except
+y,:z}[d;0#`]x;
+ {-1(x#" "),(string y),"->",","sv string z;}.'d;} / where 0<>count each d[;2];}
+
+\
+
+f:{g[]};g:{h[];i[]};h:{j[]};;j:{i[];k[]};;i:{j[]};k:{f[]}
+callGraph`f
