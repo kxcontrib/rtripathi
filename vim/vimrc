@@ -1,0 +1,25 @@
+" colorscheme tango
+" colorscheme vividink
+syntax on
+:ab #= =========================================================================
+:hi Search ctermfg=7 ctermbg=5
+:set background=dark
+:syntax on
+:set autoindent
+:set autowrite
+:set tabstop=4 shiftwidth=4 expandtab
+:set hlsearch
+:set incsearch
+:set t_Co=256
+" colorscheme qburn
+" colorscheme tabula
+" colorscheme nightwish
+" colorscheme tango
+" colorscheme psql
+" colorscheme inkpot
+" colorscheme midnight
+" fix meta-keys which generate <Esc>a .. <Esc>z
+" colorscheme inkpot
+" colorscheme ir_black
+" colorscheme tabula
+colorscheme zenburn
