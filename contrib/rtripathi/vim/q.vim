@@ -350,8 +350,9 @@ syn match qError		"^q)"
 syn match qSymbol		"\(`\<[a-zA-Z0-9\.][a-zA-Z0-9_\.]*\>\)" contains=kType
 syn keyword qType		boolean byte short int long real float char symbol month date datetime time minute second contained 
 
-syn match qContext                "\(\.[^zQoh][0-9|a-z|A-Z]*\)"
+syn match qContext                "\(\.[^zQoh\[][0-9|a-z|A-Z]*\)"
 syn match qCast                   "\`\(text\|bit\|tinyint\|smallint\|int\|bigint\|real\|float\|char\|varchar\|date\|datetime\|time\)\$\s*"
+syn match qCond                   "\.\[*\]\s*"
 
 if !exists("did_q_syntax_inits")
   let did_q_syntax_inits = 1
@@ -365,6 +366,7 @@ if !exists("did_q_syntax_inits")
   hi link qLib                  DiffText
   hi link qCast                 SpecialKey
   hi link qType                 Boolean
+  hi link qCond                 Label
  endif
 
 let b:current_syntax = "q"
