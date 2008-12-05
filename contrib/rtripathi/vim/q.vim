@@ -12,6 +12,11 @@ endif
 
 " Read the k syntax to start with
 source <sfile>:p:h/k.vim
+" source <sfile>:p:h/ijs.vim
+"source <sfile>:p:h/ksql.vim
+
+" brace yourself
+source <sfile>:p:h/braces.vim
 set iskeyword=@,_,48-57,.
 
 syn keyword qFunction abs aj all and any asc asof attr ceiling cols
@@ -351,8 +356,7 @@ syn match qSymbol		"\(`\<[a-zA-Z0-9\.][a-zA-Z0-9_\.]*\>\)" contains=kType
 syn keyword qType		boolean byte short int long real float char symbol month date datetime time minute second contained 
 
 syn match qContext                "\(\.[^zQoh\[][0-9|a-z|A-Z]*\)"
-syn match qCast                   "\`\(text\|bit\|tinyint\|smallint\|int\|bigint\|real\|float\|char\|varchar\|date\|datetime\|time\)\$\s*"
-syn match qCond                   "\.\[*\]\s*"
+syn match qCast                   "\`\(text\|bit\|tinyint\|smallint\|int\|bigint\|real\|float\|char\|varchar\|date\|datetime\|time\|long\)\$\s*"
 
 if !exists("did_q_syntax_inits")
   let did_q_syntax_inits = 1
@@ -363,10 +367,9 @@ if !exists("did_q_syntax_inits")
   hi link qSymbol		Special
   hi link qGlobal		Constant
   hi link qContext              Define
-  hi link qLib                  DiffText
+  hi link qLib                  Label
   hi link qCast                 SpecialKey
   hi link qType                 Boolean
-  hi link qCond                 Label
  endif
 
 let b:current_syntax = "q"
@@ -374,5 +377,3 @@ let b:current_syntax = "q"
 if main_syntax == 'q'
   unlet main_syntax
 endif
-
-" vim: ts=8
