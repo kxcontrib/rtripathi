@@ -16,7 +16,7 @@ source <sfile>:p:h/k.vim
 "source <sfile>:p:h/ksql.vim
 
 " brace yourself
-source <sfile>:p:h/braces.vim
+source <sfile>:p:h/nested.vim
 set iskeyword=@,_,48-57,.
 
 syn keyword qFunction abs aj all and any asc asof attr ceiling cols
