@@ -9,4 +9,4 @@ qf: "syn keyword qFunction  \"",/:(1 _ string key .q),\:"\"";
 h:read0 `:header.txt;
 f:read0 `:footer.txt;
 nest:read0 `:nested.vim;
-`:q.vim 0: h,qf,lib,f; /,op,nest
+`:q.vim 0: h,qf,lib,f,nest; /,op special syms create problems
