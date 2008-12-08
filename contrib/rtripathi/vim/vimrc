@@ -22,4 +22,5 @@ syntax on
 " colorscheme inkpot
 " colorscheme ir_black
 " colorscheme tabula
-colorscheme zenburn
+" colorscheme zenburn
+colorscheme murphy
