@@ -1,0 +1,78 @@
+    * From: "Aaron Davies" <aaron.davies@gmail.com>
+    * To: k4@listbox.com
+    * Subject: introspective miscellany
+    * Date: Thu, 13 Nov 2008 10:59:49 +0800
+
+potentially useful
+
+wtf:{(` sv'd,'f)where count each f:where each(get each d:` sv'`,'`,key`)~'\:x}
+
+callGraph:{
+ d:p!c@'where each 100={@[type get@;x;0h]}each'c:(get each get each
+p:system"f")[;3];
+ d:{[x;y;z](enlist(-1+count y;z;f)),raze .z.s[x;y]each(f:x z)except
+y,:z}[d;0#`]x;
+ {-1(x#" "),(string y),"->",","sv string z;}.'d;} / where 0<>count each d[;2];}
+
+\
+
+f:{g[]};g:{h[];i[]};h:{j[]};;j:{i[];k[]};;i:{j[]};k:{f[]}
+callGraph`f
+
+    * From: Rohit Tripathi <rohit.trip@gmail.com>
+    * To: aaron.davies@gmail.com, k4@listbox.com
+    * Subject: graphviz with // Re: [k4] introspective miscellany
+    * Date: Mon, 9 Feb 2009 00:28:27 -0500
+
+I tried out a simple mod to Aaron's code, to generate graphs using
+graphviz (very straightforward):
+
+https://code.kx.com/trac/browser/contrib/rtripathi/wtf.q
+
+1. graphs[`f]
+2. neato -Tpng f.m -o output.ps
+3. gs output.ps
+
+The output looks pretty cool:
+https://code.kx.com/trac/browser/contrib/rtripathi/wtf.png
+
+graphviz is available from: http://www.graphviz.org/
+With dot, it is possible to enhance it further to display list of
+parameters etc. Share and enjoy!
+
+    * From: Aaron Davies <aaron.davies@gmail.com>
+    * To: k4@listbox.com
+    * Subject: Re: graphviz with // Re: [k4] introspective miscellany
+    * Date: Mon, 9 Feb 2009 14:03:39 +0800
+
+i worked on something similar a while ago
+
+i don't pretend to understand graphviz, so this comes out fairly ugly,
+and is probably not terribly robust
+
+$ cat callGraphV.q
+\d .q
+callGraphV:{d:p!c@'where each any 100 112=\:{@[type
+get@;x;0h]}each'c:(get each get each p:system"f")[;3];
+ leaves:where d~\:`$();q:{"\"",x,"\""};b:{"{",x,"}"};
+ r:enlist"digraph ",(q string rootname .z.f),"{";
+ r,:enlist b"rank=source ",";"sv string(key d)where not(key d)in raze d;
+ r,:"->"sv/:(first;b";"sv 1_)@\:/:q each'string{y,'x y}[d](key d)except leaves;
+ r,:q each string leaves;r,:enlist"}";@[r;1+til -2+count r;" ",]}
+
+on your sample functions, the graph file is
+
+digraph "callGraphV"{
+ {rank=source }
+ "f"->{"g";"h"}
+ "g"->{"n"}
+ "h"->{"meep"}
+ "n"->{"m";"f"}
+ "m"
+ "meep"
+}
+
+it renders as
+
+http://img218.imageshack.us/my.php?image=graphjv2.png
+
