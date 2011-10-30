@@ -1,0 +1,1 @@
+objs:flip[`id`typ`def!(`$'b@i;type each v[i];v[i:where not null v:@[value;;0N]'[b:("c"$32+til 95) except "\\",.Q.an except "_"]])],raze{flip[`id`typ`def!($[x~`.q;k;id];t;v)],raze .z.s each id where 99h=t:type each v:value each id:raze` sv'x,/:k:key x}'[` sv'`,'key`];
