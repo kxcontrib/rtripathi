@@ -13,8 +13,7 @@ ellipsoids:flip `id`name`eqradius`eccentricity2!("ISIF";",") 0: `:ellipsoid.txt;
 / available at http://www.gpsy.com/gpsinfo/geotoutm/
 / ref: USGS Bulletin 1532, converts latitude/longitude to UTM coordinates
 / returns a dict of zone and UTM coordinates 
-UTMdesig:{[lat] /my version is slightly inaccurate for inequalities at intervals
-    desig:asc (!) . flip 2 cut 
+gUTMdesig: group UTMdesig: asc (!) . flip 2 cut /my version is slightly inaccurate for inequalities at intervals
     (   `Z; 84.0;
         `X; 72.0;
         `W; 64.0;
@@ -37,14 +36,13 @@ UTMdesig:{[lat] /my version is slightly inaccurate for inequalities at intervals
         `D; -72.0;
         `C; -80.0;
         `Z; -0w); /latitude beyond UTM limits
-        string key[desig]@key[group desig] bin "f"$lat}
 
 /need more complicated calculations for other places, but for now this will do
 getzone:{[latitude;LongTemp] 1+"i"$(LongTemp+180)%6};
 
 calcM:{[radius;ecc2;LatRad]
-        sqrecc2:sqr[ecc2];
-        cubeecc2:cube[ecc2];
+        sqrecc2:sqr ecc2;
+        cubeecc2:cube ecc2;
 
         radius*(1 - (ecc2%4) - (3*sqrecc2%64) - (5*cubeecc2%256))*LatRad
         - ((3*ecc2%8) + (3*sqrecc2%32) - (45*cubeecc2%1024))*sin[2*LatRad]
@@ -61,7 +59,7 @@ ll2utm:{[ellipsoidref;latitude;longitude]
     zone:getzone[latitude;LongTemp];
     LongOrig: (6*zone-1) - 180 - 3;
     LongOrigRad: LongOrig * deg2rad;
-    UTMZone: `$string[zone],UTMdesig[latitude];
+    UTMZone: `$string[zone],string key[UTMdesig]@key[gUTMdesig] bin "f"$latitude;
     eccP2:ecc2%1-ecc2;
     N:radius%sqrt 1 - ecc2*sqr sin LatRad;
     T:sqr tan LatRad;
@@ -73,7 +71,7 @@ ll2utm:{[ellipsoidref;latitude;longitude]
                     + (5-(18*T)+sqr[T]+(72*C)-(58*eccP2))*cube[A]*sqr[A]%120);
 
     UTMNorthing:k0*(M+N*tan[LatRad]*((sqr[A]%2)+((5-T)+(9*C)+4*sqr[C])*A*cube[A]%24) 
-                    + (61-(58*T)+sqr[T]+(600*C)-(330*eccP2))*sqr[cube[A]]%720);
+                    + (61-(58*T)+sqr[T]+(600*C)-(330*eccP2))*sqr[cube A]%720);
 
     if[latitude< 0; UTMNorthing+:10000000.0];
     (!) . flip 2 cut (
@@ -93,10 +91,13 @@ ll2utm:{[ellipsoidref;latitude;longitude]
     http://landview.census.gov/geo/www/gazetteer/places.html
     http://www.census.gov/geo/www/tiger/tgrshp2011/tgrshp2011.html
 \
-citydata:flip `index`zip`state`town`longitude`latitude`population1990`allocation!("IIS*FFIF";",") 0: read0 `:zips.txt;
+citydata:flip `index`zip`state`town`longitude`latitude`population1990`allocation!("ISSSFFIF";",") 0: read0 `:zips.txt;
 citydata:citydata,'ll2utm[14;]'[citydata`latitude;citydata`longitude];
 
 /find neighbors, somewhat redundant really if citydata table is correct
 neighbors:{[zipcode;radius] 
-    coords:exec UTMZone,UTMNorthing400,UTMEasting400 from citydata where zip=zipcode;
-    select zip,state,town,longitude,latitude,population1990,allocation from citydata where UTMZone in coords`UTMZone,UTMEasting400 within raze (neg radius;radius)+/:coords`UTMEasting400, UTMNorthing400 within raze (neg radius;radius)+/:coords`UTMNorthing400}
+    coords:exec UTMZone,UTMNorthing400,UTMEasting400 from citydata where zip=`$string zipcode; /sym in table because NJ zipcodes start with zero
+    select zip,state,town,longitude,latitude,population1990,allocation from citydata where 
+        UTMZone in coords`UTMZone,
+        UTMEasting400 within raze (neg radius;radius)+/:coords`UTMEasting400, 
+        UTMNorthing400 within raze (neg radius;radius)+/:coords`UTMNorthing400}
