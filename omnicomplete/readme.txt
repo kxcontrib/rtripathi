@@ -1,5 +1,12 @@
 Omnicomplete for VIM
 
-/media/hd/dev/k4/svn/contrib/rtripathi/mutation/identifiers.q is better at generating names for EVERYTHING in the q runtime environment (except of course "\\"), so use that instead.
+Generates a tag file ($HOME/.vim/tags/qtags.txt) for q -- similar to ctags, 
+that can be used through the omnicomplete functionality of vim
 
--Rohit Tripathi, 2011
+* copy omnitags.q and qtags.txt to $HOME/.vim/tags/
+* copy omniq.vim to ~/.vim/plugin
+* change paths in omniq.vim to point to the correct location if necessary
+
+see also:
+http://code.kx.com/wsvn/code/contrib/simon/vim/generate/
+http://code.kx.com/wsvn/code/contrib/rtripathi/mutation/identifiers.q 

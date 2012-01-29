@@ -9,7 +9,7 @@
         return start
       else
         let res = []
-        for m in sort(readfile('/home/rohit/.vim/tags/qtags.txt'))
+        for m in sort(readfile('$HOME/.vim/tags/qtags.txt'))
            if m =~ '^' . a:base
 		   let tags = split(m, '|')
 		 call add(res, {'word': tags[0], 
@@ -21,6 +21,6 @@
    endif
  endfunction
 
-" map <C-F12> :!q generatetags.q.<CR>
+" map <C-F12> :!q omnitags.q.<CR>
  map <C-F12> :echo "generating tags"<CR>
-	" $QHOME/l64/q /home/rohit/.vim/tags/generatetags.q
+	" $QHOME/l32/q $HOME/.vim/tags/omnitags.q
