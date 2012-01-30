@@ -15,5 +15,6 @@ q client.q
 
 Possible improvements:
 
-* log of chat
+* log chat to file
 * check operating system and display in color
+* allow usernames
