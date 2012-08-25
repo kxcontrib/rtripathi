@@ -1,3 +1,4 @@
+/codes borrowed from QuickFix's FixFieldNumbers.h
 a:2 cut 
    (`RelatedPartyID;1563;
     `MaxPriceLevels;1090;
@@ -1647,5 +1648,3 @@ a:2 cut
     `BookingType;775;
     `StipulationValue;234;
     `SettlCurrBidFxRate;656);
-
-val:(first each a)!last each a;
